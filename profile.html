@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Menu of Our Love</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: #ffe6f0;
+        color: #d63384;
+        text-align: center;
+        overflow-x: hidden;
+      }
+
+      h1 {
+        margin-top: 40px;
+        font-size: 32px;
+        animation: fadeIn 2s ease-out;
+      }
+
+      p.subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        max-width: 700px;
+        margin: auto;
+        animation: slideIn 1.5s ease-out;
+      }
+
+      .card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+      }
+
+      .card:hover {
+        transform: scale(1.05);
+      }
+
+      .card img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        margin-bottom: 10px;
+      }
+
+      .card-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 5px;
+      }
+
+      .card-desc {
+        font-size: 14px;
+        color: #555;
+      }
+
+      .heart {
+        color: red;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideIn {
+        0% {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      a {
+        text-decoration: none;
+        color: #d63384;
+        font-weight: bold;
+        margin-top: 20px;
+        display: inline-block;
+        transition: color 0.2s;
+      }
+
+      a:hover {
+        color: #ff3366;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Menu of Our Love</h1>
+    <p class="subtitle">Together Forever</p>
+
+    <div class="container">
+        <a href="memories.html">
+          <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/744/744922.png" alt="Memories" />
+            <div class="card-title">Our Memories</div>
+            <div class="card-desc">
+              Every precious moment with you <span class="heart">❤️</span>
+            </div>
+          </div>
+        </a>
+      
+        <a href="calendar.html">
+          <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Calendar" />
+            <div class="card-title">Love Calendar</div>
+            <div class="card-desc">
+              Counting days of our love story <span class="heart">💕</span>
+            </div>
+          </div>
+        </a>
+      
+        <a href="puzzle.html">
+          <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2976/2976215.png" alt="Puzzle" />
+            <div class="card-title">Love Puzzle</div>
+            <div class="card-desc">Fun games just for us</div>
+          </div>
+        </a>
+      
+        <a href="notes.html">
+          <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/4225/4225974.png" alt="Notes" />
+            <div class="card-title">Love Notes</div>
+            <div class="card-desc">Sweet letters from the heart</div>
+          </div>
+        </a>
+      </div>
+      
+    </div>
+  </body>
+</html>

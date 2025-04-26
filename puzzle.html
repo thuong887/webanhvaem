@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory For You</title>
+    <style>
+      body {
+        margin: 0;
+        background: #fff0f5;
+        font-family: "Arial", sans-serif;
+        text-align: center;
+        padding: 10px;
+        color: #e75480;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100vh;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      h1 {
+        font-size: 1.8em;
+        margin: 10px 0 5px;
+      }
+
+      .subtitle {
+        font-size: 1em;
+        color: #ff7aa2;
+        margin-bottom: 10px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        justify-items: center;
+        width: 100%;
+        max-width: 350px;
+        aspect-ratio: 3 / 4;
+        border: 3px solid #ff69b4;
+        padding: 8px;
+        border-radius: 10px;
+        background-color: #fff;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+      }
+
+      .card {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        background-color: #fff;
+        border: 2px dashed #ffb6c1;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8em;
+        color: #ff69b4;
+        cursor: pointer;
+        transition: transform 0.3s;
+        overflow: hidden;
+      }
+
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        display: block;
+      }
+
+      .card.matched {
+        background-color: #ffe4ec;
+        border: 2px solid #ff69b4;
+      }
+
+      .back-button {
+        padding: 10px 20px;
+        background-color: #ff69b4;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        margin-bottom: 10px;
+      }
+
+      .back-button:hover {
+        background-color: #ff3c85;
+      }
+
+      #winMessage {
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5em;
+        background: #fff0f5;
+        border: 3px solid #ff69b4;
+        border-radius: 15px;
+        padding: 15px 25px;
+        color: #e75480;
+        z-index: 100;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+        box-shadow: 0 0 20px #ff69b4;
+      }
+
+      #winMessage.show {
+        opacity: 1;
+        animation: popUp 0.8s ease forwards;
+      }
+
+      @keyframes popUp {
+        0% {
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Memory For You</h1>
+    <div class="subtitle">Match all the memory pairs!</div>
+
+    <div class="grid" id="grid"></div>
+    <div id="winMessage" class="hidden">🎉 You completed! 🎉</div>
+
+    <a href="profile.html" class="back-button">⬅️ Back </a>
+
+    <script>
+      const images = [
+        "images/em.png",
+        "images/em1.png",
+        "images/em2.jpg",
+        "images/em3.png",
+        "images/em4.png",
+        "images/em5.png",
+      ];
+
+      const grid = document.getElementById("grid");
+      let firstCard = null;
+      let secondCard = null;
+      let lock = false;
+      let matchedCount = 0;
+
+      function createCard(src, index) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.image = src;
+        card.dataset.index = index;
+        card.innerHTML = "?";
+
+        card.addEventListener("click", () => {
+          if (lock || card.classList.contains("matched") || card === firstCard)
+            return;
+
+          card.innerHTML = `<img src="${src}" alt="memory">`;
+
+          if (!firstCard) {
+            firstCard = card;
+          } else {
+            secondCard = card;
+            lock = true;
+
+            if (firstCard.dataset.image === secondCard.dataset.image) {
+              firstCard.classList.add("matched");
+              secondCard.classList.add("matched");
+              matchedCount += 2;
+
+              setTimeout(() => {
+                reset();
+
+                if (matchedCount === 12) {
+                  setTimeout(() => {
+                    showWinMessage();
+                    setTimeout(() => {
+                      document
+                        .getElementById("winMessage")
+                        .classList.remove("show");
+                      loadNewGrid();
+                    }, 3000);
+                  }, 1000);
+                }
+              }, 500);
+            } else {
+              setTimeout(() => {
+                firstCard.innerHTML = "?";
+                secondCard.innerHTML = "?";
+                reset();
+              }, 1000);
+            }
+          }
+        });
+
+        return card;
+      }
+
+      function reset() {
+        [firstCard, secondCard] = [null, null];
+        lock = false;
+      }
+
+      function loadNewGrid() {
+        grid.innerHTML = "";
+        matchedCount = 0;
+        const allCards = [...images, ...images].sort(() => 0.5 - Math.random());
+        allCards.forEach((src, index) => {
+          const card = createCard(src, index);
+          grid.appendChild(card);
+        });
+      }
+
+      function showWinMessage() {
+        const msg = document.getElementById("winMessage");
+        msg.classList.add("show");
+
+        for (let i = 0; i < 100; i++) {
+          const confetti = document.createElement("div");
+          confetti.style.position = "fixed";
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.top = Math.random() * 100 + "vh";
+          confetti.style.width = "8px";
+          confetti.style.height = "8px";
+          confetti.style.backgroundColor = `hsl(${
+            Math.random() * 360
+          }, 100%, 70%)`;
+          confetti.style.borderRadius = "50%";
+          confetti.style.zIndex = 99;
+          confetti.style.animation = "fall 1s ease-out forwards";
+          confetti.style.opacity = "0.8";
+          confetti.style.transform = `translateY(-100px) rotate(${
+            Math.random() * 360
+          }deg)`;
+
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 1000);
+        }
+      }
+
+      // Start the game
+      loadNewGrid();
+    </script>
+  </body>
+</html>

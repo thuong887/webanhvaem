@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Happy Anniversary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #ffe6f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: "Arial", sans-serif;
+        overflow: hidden;
+      }
+
+      .phone-frame {
+        position: relative;
+        width: 360px;
+        height: 500px;
+        overflow: hidden;
+        border-radius: 30px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+      }
+
+      .heart-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .text-box {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+      }
+
+      .text-box p {
+        font-weight: bold;
+        font-style: italic;
+        font-size: 1.3rem;
+        margin: 0 0 10px;
+        color: #c4ef1b;
+        text-shadow: 1px 1px 2px white;
+      }
+
+      .text-box button {
+        font-size: 1.2rem;
+        background-color: #f98eb9;
+        border: none;
+        border-radius: 25px;
+        padding: 12px 24px;
+        cursor: pointer;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, box-shadow 0.3s;
+      }
+
+      .text-box button:hover {
+        background-color: #e7f307;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        color: black;
+      }
+
+      @media (max-width: 400px) {
+        .phone-frame {
+          width: 90vw;
+          height: 160vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone-frame">
+      <img src="img/traitim1.jpg" alt="Heart" class="heart-img" />
+      <div class="text-box">
+        <p>A gift just for you</p>
+        <button onclick="window.location.href='pass.html'">🎁</button>
+      </div>
+    </div>
+  </body>
+</html>
